@@ -8,15 +8,22 @@ import org.springframework.web.bind.annotation.*
 
 @CrossOrigin
 
-@RequestMapping("/user")
-class UserControlerREST(private val userService: UserService) {
+@RestController
+class UserRestControler(private val userService: UserService) {
 
-    @PostMapping
+    /*
+    {
+        "name": "name",
+        "email": "email",
+        "phoneNumber": "phoneNumber"
+    }
+     */
+    @PostMapping(value = ["/user"])
     fun create(@RequestBody user: User): ResponseEntity<Long> {
         return ResponseEntity(userService.createUser(user), HttpStatus.CREATED)
     }
 
-    @GetMapping
+    @GetMapping(value = ["/users"])
     fun getAll() = userService.getAllUsers()
 
 
