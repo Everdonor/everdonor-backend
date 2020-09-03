@@ -10,7 +10,9 @@ class User(
         @Column(nullable = false, length = 500)
         var name: String,
         var email: String,
-        var phoneNumber: Int) {
+        var phoneNumber: Int,
+        var longitude: Float,
+        var latitude: Float) {
 
 
 }
