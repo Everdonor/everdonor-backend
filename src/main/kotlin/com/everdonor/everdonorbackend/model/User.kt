@@ -12,7 +12,9 @@ class User(
         var email: String,
         var phoneNumber: Int,
         var longitude: Float,
-        var latitude: Float) {
+        var latitude: Float,
+        @Enumerated(EnumType.STRING)
+        var donationType: DonationType) {
 
 
 }
