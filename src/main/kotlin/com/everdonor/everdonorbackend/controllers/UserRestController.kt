@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 @CrossOrigin
 
 @RestController
-class UserRestControler(private val userService: UserService) {
+class UserRestController(private val userService: UserService) {
 
     @PostMapping(value = ["/user"])
     fun create(@RequestBody user: User): ResponseEntity<Long> {
