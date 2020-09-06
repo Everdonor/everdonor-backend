@@ -5,7 +5,7 @@ import com.everdonor.everdonorbackend.model.User
 import com.everdonor.everdonorbackend.persistence.user.UserDAO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-
+import java.util.*
 
 
 @Service
@@ -18,6 +18,10 @@ class UserServiceImp @Autowired constructor(userDao: UserDAO) : UserService {
 
     override fun getAllUsers(): List<User?> {
         return userDao.findAll().toList()
+    }
+
+    override fun getUsersByName(name:String): List<User?> {
+        return userDao.findAllByNameContaining(name)
     }
 
 

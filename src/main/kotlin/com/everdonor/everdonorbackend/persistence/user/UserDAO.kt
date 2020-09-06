@@ -4,4 +4,8 @@ import org.springframework.data.repository.CrudRepository
 
 import com.everdonor.everdonorbackend.model.User
 
-public interface UserDAO : CrudRepository<User?, Int?>
+import java.util.*
+
+interface UserDAO : CrudRepository<User, Long?>{
+    fun findAllByNameContaining (name:String):List<User?>
+}
