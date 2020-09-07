@@ -19,6 +19,8 @@ class UserRestController(private val userService: UserService) {
         return ResponseEntity(userService.createUser(user), HttpStatus.CREATED)
     }
 
+    //todo: verify how to accept multiple params in one request
+
     @GetMapping(value = ["/users"])
     fun getAllUsers() = userService.getAllUsers()
 
@@ -40,10 +42,8 @@ class UserRestController(private val userService: UserService) {
             throw UserNotFoundException("User with id $id was not found")
     }
 
-
-    @GetMapping(value = ["/searchUser"])
-    fun getUserByName(@RequestParam q:String) = userService.getUsersByName(q)
-
+    @GetMapping(value = ["/users"], params = ["name"])
+    fun getUserByName(@RequestParam name:String) = userService.getUsersByName(name)
 
 
 }
