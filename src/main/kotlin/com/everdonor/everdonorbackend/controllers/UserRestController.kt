@@ -14,13 +14,6 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class UserRestController(private val userService: UserService) {
 
-    /*
-    {
-        "name": "name",
-        "email": "email",
-        "phoneNumber": "phoneNumber"
-    }
-     */
     @PostMapping(value = ["/user"])
     fun create(@RequestBody user: User): ResponseEntity<Long> {
         return ResponseEntity(userService.createUser(user), HttpStatus.CREATED)
@@ -46,6 +39,11 @@ class UserRestController(private val userService: UserService) {
         else
             throw UserNotFoundException("User with id $id was not found")
     }
+
+
+    @GetMapping(value = ["/searchUser"])
+    fun getUserByName(@RequestParam q:String) = userService.getUsersByName(q)
+
 
 
 }

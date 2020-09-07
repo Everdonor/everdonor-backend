@@ -21,6 +21,10 @@ class UserServiceImp @Autowired constructor(userDao: UserDAO) : UserService {
         return userDao.findAll().toList()
     }
 
+    override fun getUsersByName(name:String): List<User?> {
+        return userDao.findAllByNameContaining(name)
+    }
+
     override fun getUsersByType(donationType: DonationType): List<User?> {
         return userDao.findByDonationType(donationType)
     }
@@ -28,7 +32,6 @@ class UserServiceImp @Autowired constructor(userDao: UserDAO) : UserService {
     override fun getUserById(id: Long): Optional<User?> {
         return userDao.findById(id)
     }
-
 
     /*init {
         this.businessDAO = businessDAO
