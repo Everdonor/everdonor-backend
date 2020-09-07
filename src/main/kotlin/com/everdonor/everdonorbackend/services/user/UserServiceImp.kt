@@ -1,6 +1,7 @@
 package com.everdonor.everdonorbackend.services.user
 
 
+import com.everdonor.everdonorbackend.model.DonationType
 import com.everdonor.everdonorbackend.model.User
 import com.everdonor.everdonorbackend.persistence.user.UserDAO
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,6 +25,13 @@ class UserServiceImp @Autowired constructor(userDao: UserDAO) : UserService {
         return userDao.findAllByNameContaining(name)
     }
 
+    override fun getUsersByType(donationType: DonationType): List<User?> {
+        return userDao.findByDonationType(donationType)
+    }
+
+    override fun getUserById(id: Long): Optional<User?> {
+        return userDao.findById(id)
+    }
 
     /*init {
         this.businessDAO = businessDAO
