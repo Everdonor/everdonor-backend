@@ -13,6 +13,8 @@ class User(
         var phoneNumber: Int,
         var longitude: Float,
         var latitude: Float,
+        @Column(columnDefinition="TEXT")
+        var image: String,
         @Enumerated(EnumType.STRING)
         var donationType: DonationType) {
 
