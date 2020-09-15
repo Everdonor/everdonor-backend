@@ -10,6 +10,8 @@ class User(
         @Column(nullable = false, length = 500)
         var name: String,
         var email: String,
+        @Column(nullable = false)
+        var password: String,
         var phoneNumber: Int,
         var longitude: Float,
         var latitude: Float,
