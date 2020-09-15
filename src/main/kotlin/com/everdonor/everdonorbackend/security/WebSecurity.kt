@@ -22,7 +22,8 @@ class WebSecurity(@Autowired private val userService: UserServiceImp, @Autowired
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.cors().and().csrf().disable().authorizeRequests()
+        http.cors().and().csrf().disable()
+                .authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers("/users/**").permitAll()
                 .anyRequest().authenticated()
@@ -39,8 +40,10 @@ class WebSecurity(@Autowired private val userService: UserServiceImp, @Autowired
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
+        val corsConfiguration = CorsConfiguration().applyPermitDefaultValues()
+        corsConfiguration.addAllowedHeader("Content-Type")
         val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", CorsConfiguration().applyPermitDefaultValues())
+        source.registerCorsConfiguration("/**", corsConfiguration)
         return source
     }
 

@@ -2,6 +2,7 @@ package com.everdonor.everdonorbackend.controllers
 
 import com.everdonor.everdonorbackend.exceptions.ErrorsDetails
 import com.everdonor.everdonorbackend.exceptions.InvalidDonationTypeException
+import com.everdonor.everdonorbackend.exceptions.UserAlreadyRegisteredException
 import com.everdonor.everdonorbackend.exceptions.UserNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -23,6 +24,12 @@ class UserRestControllerExceptionHandler : ResponseEntityExceptionHandler() {
     @ExceptionHandler(value = [(UserNotFoundException::class)])
     fun handleUserNotFoundException(exception: UserNotFoundException, request: WebRequest): ResponseEntity<ErrorsDetails> {
         val errorsDetails = ErrorsDetails(Date(), "User ID not found", exception.message!!)
-        return ResponseEntity(errorsDetails, HttpStatus.BAD_REQUEST)
+        return ResponseEntity(errorsDetails, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(value = [(UserAlreadyRegisteredException::class)])
+    fun handleUserAlreadyRegisteredException(exception: UserAlreadyRegisteredException, request: WebRequest): ResponseEntity<ErrorsDetails> {
+        val errorsDetails = ErrorsDetails(Date(), "User is already registered", exception.message!!)
+        return ResponseEntity(errorsDetails, HttpStatus.CONFLICT)
     }
 }

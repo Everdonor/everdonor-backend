@@ -1,6 +1,5 @@
 package com.everdonor.everdonorbackend.model
 
-import com.everdonor.everdonorbackend.exceptions.InvalidDonationTypeException
 import org.springframework.core.convert.converter.Converter
 import org.springframework.stereotype.Component
 

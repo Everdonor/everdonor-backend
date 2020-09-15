@@ -1,6 +1,7 @@
 package com.everdonor.everdonorbackend.services.user
 
 
+import com.everdonor.everdonorbackend.exceptions.UserAlreadyRegisteredException
 import com.everdonor.everdonorbackend.model.DonationType
 import com.everdonor.everdonorbackend.model.User
 import com.everdonor.everdonorbackend.persistence.user.UserDAO
@@ -17,7 +18,9 @@ import java.util.*
 class UserServiceImp @Autowired constructor(userDao: UserDAO) : UserService, UserDetailsService {
     private val userDao: UserDAO = userDao
 
+    @Throws(UserAlreadyRegisteredException::class)
     override fun createUser(user: User): Long? {
+        userDao.findByEmail(user.email).ifPresent { throw UserAlreadyRegisteredException("User ${user.name}, ${user.email} is already registered.") }
         return userDao.save(user).id
     }
 
@@ -40,7 +43,12 @@ class UserServiceImp @Autowired constructor(userDao: UserDAO) : UserService, Use
     @Transactional(readOnly = true)
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(email: String): UserDetails {
-        val user = userDao.findByEmail(email) ?: throw UsernameNotFoundException(email)
+        val optionalUser = userDao.findByEmail(email)
+        val user: User
+        if (!optionalUser.isPresent)
+            throw UsernameNotFoundException(email)
+        else
+            user = optionalUser.get()
         return org.springframework.security.core.userdetails.User(user.email, user.password, emptyList())
     }
 
