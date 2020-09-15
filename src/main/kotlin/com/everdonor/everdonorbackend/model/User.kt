@@ -20,5 +20,4 @@ class User(
         @Enumerated(EnumType.STRING)
         var donationType: DonationType) {
 
-
 }
