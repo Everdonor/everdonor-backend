@@ -1,7 +1,6 @@
 language: java
 services:
   - mysql
-before_install:
+after_success:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS everdonate;'
-  - mysql -e 'USE everdonate;'
-  - mysql -u root --password="" < src/main/resources/data.sql
+  - mysql -u root --default-character-set=utf8 everdonate < src/main/resources/data.sql
