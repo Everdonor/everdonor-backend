@@ -51,5 +51,20 @@ class UserRestController(
     @GetMapping(value = ["/users"], params = ["name"])
     fun getUserByName(@RequestParam name:String) = userService.getUsersByName(name)
 
+    @PutMapping(value = ["/users/{id}/report"])
+    fun reportUser(@PathVariable("id") id: Long) {
+        val user = userService.getUserById(id)
+        if (user.isPresent)
+           userService.reportUser(id)
+        else
+            throw UserNotFoundException("User with id $id was not found")
+    }
+
+    @PutMapping(value = ["/users/{id}"])
+    fun modify(@RequestBody user: User): ResponseEntity<User> {
+        return ResponseEntity(userService.updateUser(user), HttpStatus.OK)
+    }
+
+
 
 }

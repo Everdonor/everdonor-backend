@@ -2,9 +2,11 @@ package com.everdonor.everdonorbackend.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
+import org.hibernate.annotations.Where
 import javax.persistence.*
 
 @Entity
+@Where(clause="is_active=1")
 class User(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +24,17 @@ class User(
         @Column(columnDefinition="TEXT")
         var image: String,
         @Enumerated(EnumType.STRING)
-        var donationType: DonationType) {
+        var donationType: DonationType,
+        var reportQuantity: Int,
+        @Column(name="is_active")
+        var active:Boolean = true
+        )
+        {
 
+        fun report():Int{
+                return this.reportQuantity++
+        }
+        fun softDelete(){
+                this.active=false
+        }
 }

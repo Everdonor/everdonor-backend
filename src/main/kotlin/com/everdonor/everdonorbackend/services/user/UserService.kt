@@ -10,4 +10,6 @@ interface UserService {
     fun getUsersByName(name:String): List<User?>
     fun getUsersByType(donationType: DonationType): List<User?>
     fun getUserById(id: Long): Optional<User?>
+    fun reportUser(id: Long)
+    fun updateUser(user: User): User?
 }

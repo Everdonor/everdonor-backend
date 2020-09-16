@@ -5,6 +5,7 @@ import com.everdonor.everdonorbackend.exceptions.UserAlreadyRegisteredException
 import com.everdonor.everdonorbackend.model.DonationType
 import com.everdonor.everdonorbackend.model.User
 import com.everdonor.everdonorbackend.persistence.user.UserDAO
+import com.everdonor.everdonorbackend.exceptions.UserNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -38,6 +39,20 @@ class UserServiceImp @Autowired constructor(userDao: UserDAO) : UserService, Use
 
     override fun getUserById(id: Long): Optional<User?> {
         return userDao.findById(id)
+    }
+
+    override fun reportUser(id: Long) {
+        val user = userDao.findById(id).get()
+        user.report()
+        if( user.reportQuantity > 10){
+            user.softDelete()
+        }
+        userDao.save(user)
+
+    }
+
+    override fun updateUser(user: User): User {
+        return userDao.save(user)
     }
 
     @Transactional(readOnly = true)
