@@ -3,4 +3,4 @@ services:
   - mysql
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS everdonate;'
-  - mysql -u root < src/main/resources/data.sql
+  - mysql -u root -proot < src/main/resources/data.sql
