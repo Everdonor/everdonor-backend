@@ -7,15 +7,21 @@ import com.everdonor.everdonorbackend.model.User
 import com.everdonor.everdonorbackend.services.user.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 
 @CrossOrigin
 
 @RestController
-class UserRestController(private val userService: UserService) {
+//@RequestMapping("/users")
+class UserRestController(
+        private val userService: UserService,
+        private val passwordEncoder: PasswordEncoder
+) {
 
-    @PostMapping(value = ["/user"])
-    fun create(@RequestBody user: User): ResponseEntity<Long> {
+    @PostMapping(value = ["/sign-up"])
+    fun signUp(@RequestBody user: User): ResponseEntity<Long> {
+        user.password = passwordEncoder.encode(user.password)
         return ResponseEntity(userService.createUser(user), HttpStatus.CREATED)
     }
 
