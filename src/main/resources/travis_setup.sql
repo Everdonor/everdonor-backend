@@ -10,5 +10,6 @@ CREATE TABLE user
     name          varchar(500) NOT NULL,
     password      varchar(255) NOT NULL,
     phone_number  int          NOT NULL,
+    reportQuantity int         NOT NULL,
     PRIMARY KEY (id)
 )
