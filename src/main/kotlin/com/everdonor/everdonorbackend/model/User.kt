@@ -21,7 +21,7 @@ class User(
         var address: String,
         var longitude: Float,
         var latitude: Float,
-        @Column(columnDefinition="TEXT")
+        @Column(columnDefinition="MEDIUMTEXT")
         var image: String,
         @Enumerated(EnumType.STRING)
         var donationType: DonationType,
