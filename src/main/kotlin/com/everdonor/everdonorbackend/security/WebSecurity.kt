@@ -42,6 +42,7 @@ class WebSecurity(@Autowired private val userService: UserServiceImp, @Autowired
     fun corsConfigurationSource(): CorsConfigurationSource {
         val corsConfiguration = CorsConfiguration().applyPermitDefaultValues()
         corsConfiguration.addAllowedHeader("Content-Type")
+        corsConfiguration.addAllowedOrigin("/**")
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", corsConfiguration)
         return source
