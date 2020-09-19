@@ -41,10 +41,12 @@ class WebSecurity(@Autowired private val userService: UserServiceImp, @Autowired
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val corsConfiguration = CorsConfiguration().applyPermitDefaultValues()
-        corsConfiguration.addAllowedHeader("Content-Type")
-        corsConfiguration.addAllowedOrigin("/**")
         val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", corsConfiguration)
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", corsConfiguration);
         return source
     }
 
