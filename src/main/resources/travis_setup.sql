@@ -11,5 +11,6 @@ CREATE TABLE user
     password      varchar(255) NOT NULL,
     phone_number  int          NOT NULL,
     report_quantity int        NOT NULL,
+    is_active   bool            NOT NULL,
     PRIMARY KEY (id)
 )
