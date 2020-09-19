@@ -5,21 +5,18 @@ import com.everdonor.everdonorbackend.exceptions.UserAlreadyRegisteredException
 import com.everdonor.everdonorbackend.exceptions.UserNotFoundException
 import com.everdonor.everdonorbackend.model.DonationType
 import com.everdonor.everdonorbackend.model.User
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
-import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.test.annotation.DirtiesContext
 
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-class UserRestControllerTest {
 
-    @LocalServerPort
-    private val port: Int? = null
+@SpringBootTest
+@AutoConfigureMockMvc
+class UserRestControllerTest {
 
     @Autowired
     private val userRestController: UserRestController? = null
@@ -44,6 +41,7 @@ class UserRestControllerTest {
 //    }
 
     @Test
+    @DirtiesContext
     @Throws(Exception::class)
     fun fetchingCentroDeDonacionesDonarte() {
         val fetchedUser = userRestController!!.getUserById(1)
@@ -60,6 +58,7 @@ class UserRestControllerTest {
 
 
     @Test
+    @DirtiesContext
     @Throws(Exception::class)
     fun report() {
         repeat(10) {
@@ -102,8 +101,8 @@ class UserRestControllerTest {
         val newUser = User(4, "Comedor Nuevo", "comedor_nuevo@gmail.com",
                 "totallyNewNotTheifablePassword", 1131110288, "Address 123",
                 -58.288F, -34.65F, "https://elsolnoticias.com.ar/wp-content/uploads/2018/04/COme110418.jpg",
-                DonationType.FOOD,0)
-        assertEquals(201,userRestController!!.signUp(newUser).statusCodeValue)
+                DonationType.FOOD, 0)
+        assertEquals(201, userRestController!!.signUp(newUser).statusCodeValue)
 
         val fetchedUser = userRestController.getUserById(4)
         assertEquals("Comedor Nuevo", fetchedUser.name)
@@ -132,8 +131,8 @@ class UserRestControllerTest {
         val newUser = User(1, "Comedor Nuevo", "comedor_nuevo@gmail.com",
                 "totallyNewNotTheifablePassword", 1131110288, "Address 123",
                 -58.288F, -34.65F, "https://elsolnoticias.com.ar/wp-content/uploads/2018/04/COme110418.jpg",
-                DonationType.FOOD,0)
-        assertEquals(200,userRestController!!.modify(newUser).statusCodeValue)
+                DonationType.FOOD, 0)
+        assertEquals(200, userRestController!!.modify(newUser).statusCodeValue)
 
         val fetchedUserModified = userRestController.getUserById(1)
         assertEquals("Comedor Nuevo", fetchedUserModified.name)
