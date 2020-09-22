@@ -25,8 +25,10 @@ class User(
         var image: String,
         @Enumerated(EnumType.STRING)
         var donationType: DonationType,
+        @JsonProperty(access = WRITE_ONLY)
         var reportQuantity: Int,
         @Column(name="is_active")
+        @JsonProperty(access = WRITE_ONLY)
         var active:Boolean = true
         )
         {

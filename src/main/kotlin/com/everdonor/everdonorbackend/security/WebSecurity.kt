@@ -1,5 +1,6 @@
 package com.everdonor.everdonorbackend.security
 
+import com.everdonor.everdonorbackend.security.SecurityConstants.LOGIN_URL
 import com.everdonor.everdonorbackend.security.SecurityConstants.SIGN_UP_URL
 import com.everdonor.everdonorbackend.services.user.UserServiceImp
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,6 +26,7 @@ class WebSecurity(@Autowired private val userService: UserServiceImp, @Autowired
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+                .antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
                 .antMatchers("/users/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -42,10 +44,12 @@ class WebSecurity(@Autowired private val userService: UserServiceImp, @Autowired
     fun corsConfigurationSource(): CorsConfigurationSource {
         val corsConfiguration = CorsConfiguration().applyPermitDefaultValues()
         val source = UrlBasedCorsConfigurationSource()
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
-        corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.allowCredentials = true
+        corsConfiguration.maxAge = 1800L
+        corsConfiguration.addAllowedOrigin("http://localhost:3000")
+        corsConfiguration.addAllowedHeader("*")
+        corsConfiguration.addAllowedMethod("*")
+        corsConfiguration.exposedHeaders = listOf("Authorization")
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source
     }
