@@ -7,6 +7,7 @@ import com.everdonor.everdonorbackend.model.User
 import com.everdonor.everdonorbackend.persistence.user.UserDAO
 import com.everdonor.everdonorbackend.exceptions.UserNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.query.Param
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -27,6 +28,11 @@ class UserServiceImp @Autowired constructor(userDao: UserDAO) : UserService, Use
 
     override fun getAllUsers(): List<User?> {
         return userDao.findAll().toList()
+    }
+
+
+    override fun getUsersByRadius(latitude:Double,longitude:Double,distance:Int): List<User?> {
+        return userDao.findByRadius(latitude,longitude,distance)
     }
 
     override fun getUsersByName(name: String): List<User?> {

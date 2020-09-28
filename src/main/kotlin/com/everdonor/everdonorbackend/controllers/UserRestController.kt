@@ -51,6 +51,11 @@ class UserRestController(
     @GetMapping(value = ["/users"], params = ["name"])
     fun getUserByName(@RequestParam name:String) = userService.getUsersByName(name)
 
+    @GetMapping(value = ["/users"], params = ["latitude","longitude","distance"])
+    fun getUserByRadius(@RequestParam latitude:Double,
+                        @RequestParam longitude:Double,
+                        @RequestParam distance:Int) = userService.getUsersByRadius(latitude,longitude,distance)
+
     @PutMapping(value = ["/users/{id}/report"])
     fun reportUser(@PathVariable("id") id: Long) {
         val user = userService.getUserById(id)
