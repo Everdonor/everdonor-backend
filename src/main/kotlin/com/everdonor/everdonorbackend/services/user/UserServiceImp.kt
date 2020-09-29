@@ -5,9 +5,7 @@ import com.everdonor.everdonorbackend.exceptions.UserAlreadyRegisteredException
 import com.everdonor.everdonorbackend.model.DonationType
 import com.everdonor.everdonorbackend.model.User
 import com.everdonor.everdonorbackend.persistence.user.UserDAO
-import com.everdonor.everdonorbackend.exceptions.UserNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.repository.query.Param
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -17,8 +15,7 @@ import java.util.*
 
 
 @Service
-class UserServiceImp @Autowired constructor(userDao: UserDAO) : UserService, UserDetailsService {
-    private val userDao: UserDAO = userDao
+class UserServiceImp @Autowired constructor(private val userDao: UserDAO) : UserService, UserDetailsService {
 
     @Throws(UserAlreadyRegisteredException::class)
     override fun createUser(user: User): Long? {
@@ -39,8 +36,8 @@ class UserServiceImp @Autowired constructor(userDao: UserDAO) : UserService, Use
         return userDao.findAllByNameContaining(name)
     }
 
-    override fun getUsersByType(donationType: DonationType): List<User?> {
-        return userDao.findByDonationType(donationType)
+    override fun getUsersByTypesIn(donationTypes: List<DonationType>): List<User?> {
+        return userDao.findByDonationTypesIn(donationTypes)
     }
 
     override fun getUserById(id: Long): Optional<User?> {

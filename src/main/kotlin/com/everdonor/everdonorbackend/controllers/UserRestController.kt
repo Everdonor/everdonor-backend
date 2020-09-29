@@ -25,17 +25,15 @@ class UserRestController(
         return ResponseEntity(userService.createUser(user), HttpStatus.CREATED)
     }
 
-    //todo: verify how to accept multiple params in one request
-
     @GetMapping(value = ["/users"])
     fun getAllUsers() = userService.getAllUsers()
 
-    @GetMapping(value = ["/users"], params = ["type"])
-    fun getUsersByType(@RequestParam("type") donationType: DonationType): List<User?> {
-        if (donationType == DonationType.UNKNOWN)
+    @GetMapping(value = ["/users"], params = ["types"])
+    fun getUsersByTypes(@RequestParam types: List<DonationType>): List<User?> {
+        if (types.isEmpty() || types.contains(DonationType.UNKNOWN))
             throw InvalidDonationTypeException("Donation type is invalid")
         else {
-            return userService.getUsersByType(donationType)
+            return userService.getUsersByTypesIn(types)
         }
     }
 
@@ -49,18 +47,18 @@ class UserRestController(
     }
 
     @GetMapping(value = ["/users"], params = ["name"])
-    fun getUserByName(@RequestParam name:String) = userService.getUsersByName(name)
+    fun getUserByName(@RequestParam name: String) = userService.getUsersByName(name)
 
-    @GetMapping(value = ["/users"], params = ["latitude","longitude","distance"])
-    fun getUserByRadius(@RequestParam latitude:Double,
-                        @RequestParam longitude:Double,
-                        @RequestParam distance:Int) = userService.getUsersByRadius(latitude,longitude,distance)
+    @GetMapping(value = ["/users"], params = ["latitude", "longitude", "distance"])
+    fun getUserByRadius(@RequestParam latitude: Double,
+                        @RequestParam longitude: Double,
+                        @RequestParam distance: Int) = userService.getUsersByRadius(latitude, longitude, distance)
 
     @PutMapping(value = ["/users/{id}/report"])
     fun reportUser(@PathVariable("id") id: Long) {
         val user = userService.getUserById(id)
         if (user.isPresent)
-           userService.reportUser(id)
+            userService.reportUser(id)
         else
             throw UserNotFoundException("User with id $id was not found")
     }
@@ -70,6 +68,15 @@ class UserRestController(
         return ResponseEntity(userService.updateUser(user), HttpStatus.OK)
     }
 
-
+    //TODO: WIP - Do not use
+    @GetMapping(value = ["/users"], params = ["types", "name", "latitude", "longitude", "distance"])
+    fun getUsersByTypesNameAndOrRadius(@RequestParam(required = false) types: List<DonationType>,
+                                       @RequestParam(required = false) name: String,
+                                       @RequestParam(required = false) latitude: Double,
+                                       @RequestParam(required = false) longitude: Double,
+                                       @RequestParam(required = false) distance: Int): List<User?> {
+        return userService.getUsersByRadius(latitude, longitude, distance)
+                .filter { user -> user!!.name.contains(name).and(user.donationTypes.any { it in types }) }
+    }
 
 }

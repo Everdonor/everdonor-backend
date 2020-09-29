@@ -10,7 +10,7 @@ class UserTest {
     fun newUserNamedPhillip() {
         val user = User(1, "Phillip", "phillip@email.com",
                 "password",1131122222,"address 1234",
-                37.77F, 122.23F, "imageUrl", FOOD,0)
+                37.77F, 122.23F, "imageUrl", listOf(FOOD),0)
 
         assertEquals("Phillip", user.name)
         assertEquals("phillip@email.com", user.email)
@@ -20,6 +20,6 @@ class UserTest {
         assertEquals(37.77F, user.longitude)
         assertEquals(122.23F, user.latitude)
         assertEquals("imageUrl", user.image)
-        assertEquals(FOOD, user.donationType)
+        assertEquals(listOf(FOOD), user.donationTypes)
     }
 }

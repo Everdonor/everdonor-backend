@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
 
 interface UserDAO : CrudRepository<User?, Int?> {
-    fun findByDonationType(donationType: DonationType): List<User>
+    fun findByDonationTypesIn(donationTypes: List<DonationType>): List<User>
     fun findById(id: Long): Optional<User?>
     fun findAllByNameContaining (name:String):List<User?>
     fun findByEmail(email: String): Optional<User?>

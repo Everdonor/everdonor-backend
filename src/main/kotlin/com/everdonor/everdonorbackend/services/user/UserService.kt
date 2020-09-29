@@ -8,7 +8,7 @@ interface UserService {
     fun createUser(user: User): Long?
     fun getAllUsers(): List<User?>
     fun getUsersByName(name:String): List<User?>
-    fun getUsersByType(donationType: DonationType): List<User?>
+    fun getUsersByTypesIn(donationTypes: List<DonationType>): List<User?>
     fun getUserById(id: Long): Optional<User?>
     fun reportUser(id: Long)
     fun updateUser(user: User): User?

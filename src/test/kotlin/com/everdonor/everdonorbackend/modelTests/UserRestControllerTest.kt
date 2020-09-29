@@ -8,12 +8,14 @@ import com.everdonor.everdonorbackend.model.User
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
+import org.springframework.test.context.junit4.SpringRunner
 
-
+@RunWith(SpringRunner::class)
 @SpringBootTest
 @AutoConfigureMockMvc
 class UserRestControllerTest {
@@ -53,7 +55,7 @@ class UserRestControllerTest {
         assertEquals(-58.3F, fetchedUser.longitude)
         assertEquals(-34.72F, fetchedUser.latitude)
         assertEquals("https://i0.wp.com/updatemexico.com/wp-content/uploads/2020/06/WhatsApp-Image-2020-06-11-at-16.44.11.jpeg?fit=1125%2C633&ssl=1", fetchedUser.image)
-        assertEquals(DonationType.FUNDING, fetchedUser.donationType)
+        assertEquals(listOf(DonationType.FUNDING), fetchedUser.donationTypes)
     }
 
 
@@ -73,10 +75,10 @@ class UserRestControllerTest {
         assertEquals(-58.3F, fetchedUser.longitude)
         assertEquals(-34.72F, fetchedUser.latitude)
         assertEquals("https://i0.wp.com/updatemexico.com/wp-content/uploads/2020/06/WhatsApp-Image-2020-06-11-at-16.44.11.jpeg?fit=1125%2C633&ssl=1", fetchedUser.image)
-        assertEquals(DonationType.FUNDING, fetchedUser.donationType)
+        assertEquals(listOf(DonationType.FUNDING), fetchedUser.donationTypes)
         assertEquals(10, fetchedUser.reportQuantity)
 
-        userRestController!!.reportUser(1)
+        userRestController.reportUser(1)
 
         assertThrows<UserNotFoundException> { userRestController!!.getUserById(1) }
 
@@ -101,7 +103,7 @@ class UserRestControllerTest {
         val newUser = User(4, "Comedor Nuevo", "comedor_nuevo@gmail.com",
                 "totallyNewNotTheifablePassword", 1131110288, "Address 123",
                 -58.288F, -34.65F, "https://elsolnoticias.com.ar/wp-content/uploads/2018/04/COme110418.jpg",
-                DonationType.FOOD, 0)
+                listOf(DonationType.FOOD), 0)
         assertEquals(201, userRestController!!.signUp(newUser).statusCodeValue)
 
         val fetchedUser = userRestController.getUserById(4)
@@ -112,7 +114,7 @@ class UserRestControllerTest {
         assertEquals(-58.288F, fetchedUser.longitude)
         assertEquals(-34.65F, fetchedUser.latitude)
         assertEquals("https://elsolnoticias.com.ar/wp-content/uploads/2018/04/COme110418.jpg", fetchedUser.image)
-        assertEquals(DonationType.FOOD, fetchedUser.donationType)
+        assertEquals(listOf(DonationType.FOOD), fetchedUser.donationTypes)
     }
 
     @Test
@@ -126,12 +128,12 @@ class UserRestControllerTest {
         assertEquals(-58.3F, fetchedUser.longitude)
         assertEquals(-34.72F, fetchedUser.latitude)
         assertEquals("https://i0.wp.com/updatemexico.com/wp-content/uploads/2020/06/WhatsApp-Image-2020-06-11-at-16.44.11.jpeg?fit=1125%2C633&ssl=1", fetchedUser.image)
-        assertEquals(DonationType.FUNDING, fetchedUser.donationType)
+        assertEquals(listOf(DonationType.FUNDING), fetchedUser.donationTypes)
 
         val newUser = User(1, "Comedor Nuevo", "comedor_nuevo@gmail.com",
                 "totallyNewNotTheifablePassword", 1131110288, "Address 123",
                 -58.288F, -34.65F, "https://elsolnoticias.com.ar/wp-content/uploads/2018/04/COme110418.jpg",
-                DonationType.FOOD, 0)
+                listOf(DonationType.FOOD), 0)
         assertEquals(200, userRestController!!.modify(newUser).statusCodeValue)
 
         val fetchedUserModified = userRestController.getUserById(1)
@@ -142,7 +144,7 @@ class UserRestControllerTest {
         assertEquals(-58.288F, fetchedUserModified.longitude)
         assertEquals(-34.65F, fetchedUserModified.latitude)
         assertEquals("https://elsolnoticias.com.ar/wp-content/uploads/2018/04/COme110418.jpg", fetchedUserModified.image)
-        assertEquals(DonationType.FOOD, fetchedUserModified.donationType)
+        assertEquals(listOf(DonationType.FOOD), fetchedUserModified.donationTypes)
     }
 
     @Test

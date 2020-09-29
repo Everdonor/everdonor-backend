@@ -6,7 +6,7 @@ import org.hibernate.annotations.Where
 import javax.persistence.*
 
 @Entity
-@Where(clause="is_active=1")
+@Where(clause = "is_active=1")
 class User(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,22 +21,24 @@ class User(
         var address: String,
         var longitude: Float,
         var latitude: Float,
-        @Column(columnDefinition="MEDIUMTEXT")
+        @Column(columnDefinition = "MEDIUMTEXT")
         var image: String,
+        @ElementCollection(targetClass = DonationType::class)
         @Enumerated(EnumType.STRING)
-        var donationType: DonationType,
+        @Column(name = "donation_type")
+        var donationTypes: Collection<DonationType>,
         @JsonProperty(access = WRITE_ONLY)
-        var reportQuantity: Int,
-        @Column(name="is_active")
+        var reportQuantity: Int = 0,
+        @Column(name = "is_active")
         @JsonProperty(access = WRITE_ONLY)
-        var active:Boolean = true
-        )
-        {
+        var active: Boolean = true
+) {
 
-        fun report():Int{
-                return this.reportQuantity++
-        }
-        fun softDelete(){
-                this.active=false
-        }
+    fun report(): Int {
+        return this.reportQuantity++
+    }
+
+    fun softDelete() {
+        this.active = false
+    }
 }
