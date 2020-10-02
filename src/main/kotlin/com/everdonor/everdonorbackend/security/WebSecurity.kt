@@ -2,6 +2,7 @@ package com.everdonor.everdonorbackend.security
 
 import com.everdonor.everdonorbackend.security.SecurityConstants.LOGIN_URL
 import com.everdonor.everdonorbackend.security.SecurityConstants.SIGN_UP_URL
+import com.everdonor.everdonorbackend.security.SecurityConstants.UPDATEPASSWORD_URL
 import com.everdonor.everdonorbackend.services.user.UserServiceImp
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -27,6 +28,7 @@ class WebSecurity(@Autowired private val userService: UserServiceImp, @Autowired
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
+                .antMatchers(HttpMethod.POST, UPDATEPASSWORD_URL).permitAll()
                 .antMatchers("/users/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
