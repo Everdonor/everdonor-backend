@@ -23,7 +23,7 @@ class User(
         var latitude: Float,
         @Column(columnDefinition = "MEDIUMTEXT")
         var image: String,
-        @ElementCollection(targetClass = DonationType::class)
+        @ElementCollection(targetClass = DonationType::class, fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)
         @Column(name = "donation_type")
         var donationTypes: Collection<DonationType>,
