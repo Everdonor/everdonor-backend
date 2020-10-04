@@ -3,7 +3,6 @@ package com.everdonor.everdonorbackend
 import com.everdonor.everdonorbackend.controllers.UserRestController
 import com.everdonor.everdonorbackend.model.DonationType
 import com.everdonor.everdonorbackend.model.User
-import com.everdonor.everdonorbackend.persistence.user.UserDAO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.event.ApplicationReadyEvent

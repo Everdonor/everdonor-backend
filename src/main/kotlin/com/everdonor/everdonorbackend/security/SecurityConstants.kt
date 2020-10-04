@@ -7,4 +7,5 @@ object SecurityConstants {
     const val HEADER_STRING = "Authorization"
     const val SIGN_UP_URL = "/sign-up"
     const val LOGIN_URL = "/login"
+    const val UPDATEPASSWORD_URL = "/updatePassword"
 }

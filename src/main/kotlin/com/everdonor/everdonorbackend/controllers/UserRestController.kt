@@ -1,6 +1,7 @@
 package com.everdonor.everdonorbackend.controllers
 
 import com.everdonor.everdonorbackend.exceptions.InvalidDonationTypeException
+import com.everdonor.everdonorbackend.exceptions.InvalidPasswordException
 import com.everdonor.everdonorbackend.exceptions.UserNotFoundException
 import com.everdonor.everdonorbackend.model.DonationType
 import com.everdonor.everdonorbackend.model.User
@@ -9,11 +10,11 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
 
 @CrossOrigin(origins = ["*"])
 
 @RestController
-//@RequestMapping("/users")
 class UserRestController(
         private val userService: UserService,
         private val passwordEncoder: PasswordEncoder
@@ -23,6 +24,20 @@ class UserRestController(
     fun signUp(@RequestBody user: User): ResponseEntity<Long> {
         user.password = passwordEncoder.encode(user.password)
         return ResponseEntity(userService.createUser(user), HttpStatus.CREATED)
+    }
+
+    @PostMapping(value = ["/updatePassword"], params = ["newPassword", "oldPassword", "id"])
+    fun updatePassword(@RequestParam("newPassword") newPassword: String,
+                       @RequestParam("oldPassword") oldPassword: String,
+                       @RequestParam("id") id: Long): ResponseEntity<User> {
+        val user = userService.getUserById(id).get()
+        if (passwordEncoder.matches(oldPassword, user.password)) {
+            user.password = passwordEncoder.encode(newPassword)
+            return ResponseEntity(userService.updateUser(user), HttpStatus.CREATED)
+        } else {
+            throw ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Password is invalid")
+        }
     }
 
     @GetMapping(value = ["/users"])
@@ -64,7 +79,7 @@ class UserRestController(
     }
 
     @PutMapping(value = ["/users/{id}"])
-    fun modify(@RequestBody user: User): ResponseEntity<User> {
+    fun modify(@RequestBody user: User, @PathVariable("id") id: Long): ResponseEntity<User> {
         return ResponseEntity(userService.updateUser(user), HttpStatus.OK)
     }
 
