@@ -1,9 +1,6 @@
 package com.everdonor.everdonorbackend.controllers
 
-import com.everdonor.everdonorbackend.exceptions.ErrorsDetails
-import com.everdonor.everdonorbackend.exceptions.InvalidDonationTypeException
-import com.everdonor.everdonorbackend.exceptions.UserAlreadyRegisteredException
-import com.everdonor.everdonorbackend.exceptions.UserNotFoundException
+import com.everdonor.everdonorbackend.exceptions.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -31,5 +28,11 @@ class UserRestControllerExceptionHandler : ResponseEntityExceptionHandler() {
     fun handleUserAlreadyRegisteredException(exception: UserAlreadyRegisteredException, request: WebRequest): ResponseEntity<ErrorsDetails> {
         val errorsDetails = ErrorsDetails(Date(), "User is already registered", exception.message!!)
         return ResponseEntity(errorsDetails, HttpStatus.CONFLICT)
+    }
+
+    @ExceptionHandler(value = [(InvalidPasswordException::class)])
+    fun handleInvalidPasswordException(exception: InvalidPasswordException, request: WebRequest): ResponseEntity<ErrorsDetails> {
+        val errorsDetails = ErrorsDetails(Date(), "Password is invalid", exception.message!!)
+        return ResponseEntity(errorsDetails, HttpStatus.BAD_REQUEST)
     }
 }

@@ -33,10 +33,9 @@ class UserRestController(
         val user = userService.getUserById(id).get()
         if (passwordEncoder.matches(oldPassword, user.password)) {
             user.password = passwordEncoder.encode(newPassword)
-            return ResponseEntity(userService.updateUser(user), HttpStatus.CREATED)
+            return ResponseEntity(userService.updateUser(user), HttpStatus.ACCEPTED)
         } else {
-            throw ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Password is invalid")
+            throw InvalidPasswordException("Password is invalid")
         }
     }
 
