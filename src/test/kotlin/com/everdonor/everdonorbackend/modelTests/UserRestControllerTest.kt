@@ -3,26 +3,30 @@ package com.everdonor.everdonorbackend.modelTests
 import com.everdonor.everdonorbackend.EverdonorApplication
 import com.everdonor.everdonorbackend.model.DonationType
 import com.everdonor.everdonorbackend.model.User
-import com.everdonor.everdonorbackend.persistence.user.UserDAO
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.MediaType
+import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
+import org.springframework.http.ResponseEntity
 import org.springframework.test.annotation.DirtiesContext
-import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 
 
 @RunWith(SpringRunner::class)
-@SpringBootTest(classes = [EverdonorApplication::class], webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@AutoConfigureMockMvc
-@TestPropertySource("classpath:application-integrationtest.properties")
+@SpringBootTest(classes = [EverdonorApplication::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserRestControllerTest : RestControllerTestUtils() {
+
+    @LocalServerPort
+    private var port: Int? = null
+
+    var restTemplate: TestRestTemplate = TestRestTemplate()
+
+    var headers: HttpHeaders = HttpHeaders()
 
     /*
     {
@@ -38,23 +42,22 @@ class UserRestControllerTest : RestControllerTestUtils() {
     }
      */
 
-    @Autowired
-    private val mvc: MockMvc? = null
 
-    @Autowired
-    private val userDAO: UserDAO? = null
+    fun createURLWithPort(uri: String): String {
+        return "http://localhost:" + port + uri;
+    }
 
     @Test
     @DirtiesContext
     @Throws(Exception::class)
     fun fetchingCentroDeDonacionesDonarte() {
-        val uri = "/users/2"
-        val mvcResult = mvc!!.perform(MockMvcRequestBuilders.get(uri)
-                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn()
-        val status = mvcResult.response.status
-        assertEquals(200, status)
+        val entity = HttpEntity<String>(null, headers)
 
-        val fetchedUser = mapFromJson(mvcResult.response.contentAsString, User::class.java)
+        val response: ResponseEntity<String> = restTemplate.exchange(
+                createURLWithPort("/users/2"),
+                HttpMethod.GET, entity, String::class.java)
+
+        val fetchedUser = mapFromJson(response.body, User::class.java)
         assertEquals("Centro de donaciones Donarte", fetchedUser.name)
         assertEquals("donarte@gmail.com", fetchedUser.email)
         assertEquals(1131112345, fetchedUser.phoneNumber)
