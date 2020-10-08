@@ -1,5 +1,6 @@
 package com.everdonor.everdonorbackend.modelTests
 
+import com.everdonor.everdonorbackend.EverdonorApplication
 import com.everdonor.everdonorbackend.controllers.UserRestController
 import com.everdonor.everdonorbackend.exceptions.UserAlreadyRegisteredException
 import com.everdonor.everdonorbackend.exceptions.UserNotFoundException
@@ -17,7 +18,7 @@ import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
-@SpringBootTest
+@SpringBootTest(classes = [EverdonorApplication::class])
 @AutoConfigureMockMvc
 class UserRestControllerTest {
 
