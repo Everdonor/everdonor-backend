@@ -23,11 +23,6 @@ class UserServiceImp @Autowired constructor(private val userDao: UserDAO) : User
         return userDao.save(user).id
     }
 
-    override fun getAllUsers(): List<User?> {
-        return userDao.findAll().toList()
-    }
-
-
     override fun getUsersByRadius(latitude:Double,longitude:Double,distance:Int): List<User?> {
         return userDao.findByRadius(latitude,longitude,distance)
     }
@@ -36,13 +31,6 @@ class UserServiceImp @Autowired constructor(private val userDao: UserDAO) : User
         return userDao.findByDonationTypesInAndNameContaining(types, name)
     }
 
-    override fun getUsersByName(name: String): List<User?> {
-        return userDao.findAllByNameContaining(name)
-    }
-
-    override fun getUsersByTypesIn(donationTypes: List<DonationType>): List<User?> {
-        return userDao.findByDonationTypesIn(donationTypes)
-    }
 
     override fun getUserById(id: Long): Optional<User?> {
         return userDao.findById(id)
