@@ -1,10 +1,15 @@
 package com.everdonor.everdonorbackend.security
 
+import com.everdonor.everdonorbackend.security.SecurityConstants.ACTUATOR
 import com.everdonor.everdonorbackend.security.SecurityConstants.LOGIN_URL
 import com.everdonor.everdonorbackend.security.SecurityConstants.SIGN_UP_URL
-import com.everdonor.everdonorbackend.security.SecurityConstants.SWAGGER
+import com.everdonor.everdonorbackend.security.SecurityConstants.SWAGGER_RES
+import com.everdonor.everdonorbackend.security.SecurityConstants.SWAGGER_V2
 import com.everdonor.everdonorbackend.security.SecurityConstants.SWAGGER_UI
+import com.everdonor.everdonorbackend.security.SecurityConstants.SWAGGER_UI_INDEX
+import com.everdonor.everdonorbackend.security.SecurityConstants.SWAGGER_V3
 import com.everdonor.everdonorbackend.security.SecurityConstants.UPDATEPASSWORD_URL
+import com.everdonor.everdonorbackend.security.SecurityConstants.WEBJARS
 import com.everdonor.everdonorbackend.services.user.UserServiceImp
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -32,7 +37,12 @@ class WebSecurity(@Autowired private val userService: UserServiceImp, @Autowired
                 .antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
                 .antMatchers(HttpMethod.POST, UPDATEPASSWORD_URL).permitAll()
                 .antMatchers(HttpMethod.GET, SWAGGER_UI).permitAll()
-                .antMatchers(HttpMethod.GET, SWAGGER).permitAll()
+                .antMatchers(HttpMethod.GET, SWAGGER_RES).permitAll()
+                .antMatchers(HttpMethod.GET, SWAGGER_UI_INDEX).permitAll()
+                .antMatchers(HttpMethod.GET, WEBJARS).permitAll()
+                .antMatchers(HttpMethod.GET, ACTUATOR).permitAll()
+                .antMatchers(HttpMethod.GET, SWAGGER_V2).permitAll()
+                .antMatchers(HttpMethod.GET, SWAGGER_V3).permitAll()
                 .antMatchers("/users/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
