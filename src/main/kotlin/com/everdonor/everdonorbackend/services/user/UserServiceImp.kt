@@ -32,6 +32,10 @@ class UserServiceImp @Autowired constructor(private val userDao: UserDAO) : User
         return userDao.findByRadius(latitude,longitude,distance)
     }
 
+    override fun getUsersByTypesInAndName(types: List<DonationType>, name: String): List<User?> {
+        return userDao.findByDonationTypesInAndNameContaining(types, name)
+    }
+
     override fun getUsersByName(name: String): List<User?> {
         return userDao.findAllByNameContaining(name)
     }

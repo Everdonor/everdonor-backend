@@ -31,4 +31,6 @@ interface UserDAO : CrudRepository<User?, Int?> {
                      @Param("userLongitude")longitude:Double,
                      @Param("userDistance")distance:Int)
             : List<User?>
+
+    fun findByDonationTypesInAndNameContaining(types: List<DonationType>, name: String): List<User?>
 }

@@ -39,17 +39,17 @@ class UserRestController(
         }
     }
 
-    @GetMapping(value = ["/users"])
-    fun getAllUsers() = userService.getAllUsers()
+//    @GetMapping(value = ["/users"])
+//    fun getAllUsers() = userService.getAllUsers()
 
-    @GetMapping(value = ["/users"], params = ["types"])
-    fun getUsersByTypes(@RequestParam types: List<DonationType>): List<User?> {
-        if (types.isEmpty() || types.contains(DonationType.UNKNOWN))
-            throw InvalidDonationTypeException("Donation type is invalid")
-        else {
-            return userService.getUsersByTypesIn(types)
-        }
-    }
+//    @GetMapping(value = ["/users"], params = ["types"])
+//    fun getUsersByTypes(@RequestParam types: List<DonationType>): List<User?> {
+//        if (types.isEmpty() || types.contains(DonationType.UNKNOWN))
+//            throw InvalidDonationTypeException("Donation type is invalid")
+//        else {
+//            return userService.getUsersByTypesIn(types)
+//        }
+//    }
 
     @GetMapping(value = ["/users/{id}"])
     fun getUserById(@PathVariable("id") id: Long): User {
@@ -60,13 +60,13 @@ class UserRestController(
             throw UserNotFoundException("User with id $id was not found")
     }
 
-    @GetMapping(value = ["/users"], params = ["name"])
-    fun getUserByName(@RequestParam name: String) = userService.getUsersByName(name)
+//    @GetMapping(value = ["/users"], params = ["name"])
+//    fun getUserByName(@RequestParam name: String) = userService.getUsersByName(name)
 
-    @GetMapping(value = ["/users"], params = ["latitude", "longitude", "distance"])
-    fun getUserByRadius(@RequestParam latitude: Double,
-                        @RequestParam longitude: Double,
-                        @RequestParam distance: Int) = userService.getUsersByRadius(latitude, longitude, distance)
+//    @GetMapping(value = ["/users"], params = ["latitude", "longitude", "distance"])
+//    fun getUserByRadius(@RequestParam latitude: Double,
+//                        @RequestParam longitude: Double,
+//                        @RequestParam distance: Int) = userService.getUsersByRadius(latitude, longitude, distance)
 
     @PutMapping(value = ["/users/{id}/report"])
     fun reportUser(@PathVariable("id") id: Long) {
@@ -83,14 +83,14 @@ class UserRestController(
     }
 
     //TODO: WIP - Do not use
-    @GetMapping(value = ["/users"], params = ["types", "name", "latitude", "longitude", "distance"])
-    fun getUsersByTypesNameAndOrRadius(@RequestParam(required = false) types: List<DonationType>,
-                                       @RequestParam(required = false) name: String,
-                                       @RequestParam(required = false) latitude: Double,
-                                       @RequestParam(required = false) longitude: Double,
-                                       @RequestParam(required = false) distance: Int): List<User?> {
-        return userService.getUsersByRadius(latitude, longitude, distance)
-                .filter { user -> user!!.name.contains(name).and(user.donationTypes.any { it in types }) }
+    @GetMapping(value = ["/users"])
+    fun getUsersByTypesNameAndOrRadius(@RequestParam(required = false, defaultValue = "") types: List<DonationType>,
+                                       @RequestParam(required = false, defaultValue = "") name: String
+//                                       @RequestParam(required = false) latitude: Double,
+//                                       @RequestParam(required = false) longitude: Double,
+//                                       @RequestParam(required = false) distance: Int
+                                       ): List<User?> {
+        return userService.getUsersByTypesInAndName(types, name)
     }
 
 }

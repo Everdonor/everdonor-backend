@@ -13,4 +13,5 @@ interface UserService {
     fun reportUser(id: Long)
     fun updateUser(user: User): User?
     fun getUsersByRadius(latitude:Double,longitude:Double,distance:Int): List<User?>
+    fun getUsersByTypesInAndName(types: List<DonationType>, name: String): List<User?>
 }
