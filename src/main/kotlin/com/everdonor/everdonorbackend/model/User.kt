@@ -7,7 +7,7 @@ import javax.persistence.*
 
 @Entity
 @Where(clause = "is_active=1")
-class User(
+open class User(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long,
