@@ -8,4 +8,6 @@ object SecurityConstants {
     const val SIGN_UP_URL = "/sign-up"
     const val LOGIN_URL = "/login"
     const val UPDATEPASSWORD_URL = "/updatePassword"
+    const val SWAGGER_UI ="/swagger-ui.html"
+    const val SWAGGER="/v2/api-docs"
 }

@@ -2,6 +2,8 @@ package com.everdonor.everdonorbackend.security
 
 import com.everdonor.everdonorbackend.security.SecurityConstants.LOGIN_URL
 import com.everdonor.everdonorbackend.security.SecurityConstants.SIGN_UP_URL
+import com.everdonor.everdonorbackend.security.SecurityConstants.SWAGGER
+import com.everdonor.everdonorbackend.security.SecurityConstants.SWAGGER_UI
 import com.everdonor.everdonorbackend.security.SecurityConstants.UPDATEPASSWORD_URL
 import com.everdonor.everdonorbackend.services.user.UserServiceImp
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,6 +31,8 @@ class WebSecurity(@Autowired private val userService: UserServiceImp, @Autowired
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
                 .antMatchers(HttpMethod.POST, UPDATEPASSWORD_URL).permitAll()
+                .antMatchers(HttpMethod.GET, SWAGGER_UI).permitAll()
+                .antMatchers(HttpMethod.GET, SWAGGER).permitAll()
                 .antMatchers("/users/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
