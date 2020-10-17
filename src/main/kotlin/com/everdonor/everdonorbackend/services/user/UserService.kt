@@ -6,11 +6,9 @@ import java.util.*
 
 interface UserService {
     fun createUser(user: User): Long?
-    fun getAllUsers(): List<User?>
-    fun getUsersByName(name:String): List<User?>
-    fun getUsersByTypesIn(donationTypes: List<DonationType>): List<User?>
     fun getUserById(id: Long): Optional<User?>
     fun reportUser(id: Long)
     fun updateUser(user: User): User?
     fun getUsersByRadius(latitude:Double,longitude:Double,distance:Int): List<User?>
+    fun getUsersByTypesInAndName(types: List<DonationType>, name: String): List<User?>
 }
