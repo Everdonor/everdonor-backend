@@ -27,6 +27,7 @@ open class User(
         @Enumerated(EnumType.STRING)
         @Column(name = "donation_type")
         var donationTypes: Collection<DonationType>,
+        var todoPagoLink: String = "",
         @JsonProperty(access = WRITE_ONLY)
         var reportQuantity: Int = 0,
         @Column(name = "is_active")
