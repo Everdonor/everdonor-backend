@@ -35,4 +35,10 @@ class UserRestControllerExceptionHandler : ResponseEntityExceptionHandler() {
         val errorsDetails = ErrorsDetails(Date(), "Password is invalid", exception.message!!)
         return ResponseEntity(errorsDetails, HttpStatus.BAD_REQUEST)
     }
+
+    @ExceptionHandler(value = [(InvalidTodoPagoLiException::class)])
+    fun handleInvalidTodoPagoLinkException(exception: InvalidTodoPagoLiException, request: WebRequest): ResponseEntity<ErrorsDetails> {
+        val errorsDetails = ErrorsDetails(Date(), "Todo Pago Link is invalid.", exception.message!!)
+        return ResponseEntity(errorsDetails, HttpStatus.BAD_REQUEST)
+    }
 }

@@ -1,7 +1,7 @@
 package com.everdonor.everdonorbackend.controllers
 
-import com.everdonor.everdonorbackend.exceptions.InvalidDonationTypeException
 import com.everdonor.everdonorbackend.exceptions.InvalidPasswordException
+import com.everdonor.everdonorbackend.exceptions.InvalidTodoPagoLiException
 import com.everdonor.everdonorbackend.exceptions.UserNotFoundException
 import com.everdonor.everdonorbackend.model.DonationType
 import com.everdonor.everdonorbackend.model.User
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.server.ResponseStatusException
 
 @CrossOrigin(origins = ["*"])
 
@@ -22,8 +21,12 @@ class UserRestController(
 
     @PostMapping(value = ["/sign-up"])
     fun signUp(@RequestBody user: User): ResponseEntity<Long> {
-        user.password = passwordEncoder.encode(user.password)
-        return ResponseEntity(userService.createUser(user), HttpStatus.CREATED)
+        if (user.todoPagoLink == "" || user.todoPagoLink.contains("https://forms.todopago.com.ar")) {
+            user.password = passwordEncoder.encode(user.password)
+            return ResponseEntity(userService.createUser(user), HttpStatus.CREATED)
+        } else {
+            throw InvalidTodoPagoLiException("Todo Pago Link is invalid.")
+        }
     }
 
     @PostMapping(value = ["/updatePassword"], params = ["newPassword", "oldPassword", "id"])
@@ -62,6 +65,8 @@ class UserRestController(
         return ResponseEntity(userService.updateUser(user), HttpStatus.OK)
     }
 
+
+    //TODO: Add exceptions again
     @GetMapping(value = ["/users"])
     fun getUsersByTypesNameAndOrRadius(@RequestParam(required = false, defaultValue = "CLOTHES, FOOD, FUNDING") types: List<DonationType>,
                                        @RequestParam(required = false, defaultValue = "") name: String,
