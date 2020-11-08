@@ -32,7 +32,9 @@ open class User(
         var reportQuantity: Int = 0,
         @Column(name = "is_active")
         @JsonProperty(access = WRITE_ONLY)
-        var active: Boolean = true
+        var active: Boolean = true,
+        @ElementCollection
+        var links: Collection<String> = listOf()
 ) {
 
     fun report(): Int {
