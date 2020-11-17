@@ -22,7 +22,7 @@ interface UserDAO : CrudRepository<User?, Int?> {
             "      * sin( radians( latitude ) )" +
             "    )" +
             "  ) AS distance" +
-            " FROM everdonate.user" +
+            " FROM user" +
             " HAVING distance < :userDistance" +
             " ORDER BY distance",nativeQuery = true)
     fun findByRadius(@Param("userLatitude")latitude:Double,

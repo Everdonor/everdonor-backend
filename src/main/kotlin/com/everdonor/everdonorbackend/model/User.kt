@@ -10,31 +10,31 @@ import javax.persistence.*
 open class User(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long,
+        open val id: Long,
         @Column(nullable = false, length = 500)
-        var name: String,
-        var email: String,
+        open var name: String,
+        open var email: String,
         @Column(nullable = false)
         @JsonProperty(access = WRITE_ONLY)
-        var password: String,
-        var phoneNumber: Int,
-        var address: String,
-        var longitude: Float,
-        var latitude: Float,
+        open var password: String,
+        open var phoneNumber: Int,
+        open var address: String,
+        open var longitude: Float,
+        open var latitude: Float,
         @Column(columnDefinition = "MEDIUMTEXT")
-        var image: String,
+        open var image: String,
         @ElementCollection(targetClass = DonationType::class, fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)
         @Column(name = "donation_type")
-        var donationTypes: Collection<DonationType>,
-        var todoPagoLink: String = "",
+        open var donationTypes: Collection<DonationType>,
+        open var todoPagoLink: String = "",
         @JsonProperty(access = WRITE_ONLY)
-        var reportQuantity: Int = 0,
+        open var reportQuantity: Int = 0,
         @Column(name = "is_active")
         @JsonProperty(access = WRITE_ONLY)
-        var active: Boolean = true,
+        open var active: Boolean = true,
         @ElementCollection
-        var links: Collection<String> = listOf()
+        open var links: Collection<String> = listOf()
 ) {
 
     fun report(): Int {
