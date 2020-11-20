@@ -7,5 +7,7 @@ enum class DonationType(var type: String) {
     FOOD("Food"),
     CLOTHES("Clothes"),
     FUNDING("Funding"),
+    KIDS("Kids"),
+    TOYS("Toys"),
     UNKNOWN("Unknown")
 }

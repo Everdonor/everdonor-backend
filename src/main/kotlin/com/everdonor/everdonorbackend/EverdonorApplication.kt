@@ -45,9 +45,21 @@ internal class DBPreloader {
                 listOf(DonationType.CLOTHES)))
         userRestController.signUp(User(4, "Comedor Quilmes", "comedor_quilmes@gmail.com",
                 "pass123", 1131110293, "Address 123",
-                -58.298F, -34.75F,
+                -60.298F, -36.75F,
                 "https://lh3.googleusercontent.com/proxy/LeWdvf6LdjYBabt-26pYxYOGVkO2xoYPrFwlEeg78d2FHm88OI_Zfho6b1-qYvcjp8tGQJ9ihsk2hxvuPkb_44CzgCWzbD1VlNGxSO_Or5tF1FRA-Wl9X879JXPNz_cbAEdoD2RQ64Uuh5Aphg",
                 listOf(DonationType.FOOD, DonationType.CLOTHES))
+        )
+        userRestController.signUp(User(5, "Comedor Jueguetes", "comedor_Juguetes@gmail.com",
+                "pass123", 1131110293, "Address 123",
+                -58.298F, -34.75F,
+                "https://lh3.googleusercontent.com/proxy/LeWdvf6LdjYBabt-26pYxYOGVkO2xoYPrFwlEeg78d2FHm88OI_Zfho6b1-qYvcjp8tGQJ9ihsk2hxvuPkb_44CzgCWzbD1VlNGxSO_Or5tF1FRA-Wl9X879JXPNz_cbAEdoD2RQ64Uuh5Aphg",
+                listOf(DonationType.TOYS))
+        )
+        userRestController.signUp(User(6, "Comedor Kids", "comedor_Kids@gmail.com",
+                "pass123", 1131110293, "Address 123",
+                -55.298F, -31.75F,
+                "https://lh3.googleusercontent.com/proxy/LeWdvf6LdjYBabt-26pYxYOGVkO2xoYPrFwlEeg78d2FHm88OI_Zfho6b1-qYvcjp8tGQJ9ihsk2hxvuPkb_44CzgCWzbD1VlNGxSO_Or5tF1FRA-Wl9X879JXPNz_cbAEdoD2RQ64Uuh5Aphg",
+                listOf(DonationType.KIDS))
         )
     }
 }
