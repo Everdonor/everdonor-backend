@@ -31,6 +31,10 @@ class UserServiceImp @Autowired constructor(private val userDao: UserDAO) : User
         return userDao.findByDonationTypesInAndNameContaining(types, name)
     }
 
+    override fun getUserByEmail(email: String): Optional<User?> {
+        return userDao.findByEmail(email);
+    }
+
 
     override fun getUserById(id: Long): Optional<User?> {
         return userDao.findById(id)

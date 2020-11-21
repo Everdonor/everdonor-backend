@@ -51,6 +51,15 @@ class UserRestController(
             throw UserNotFoundException("User with id $id was not found")
     }
 
+    @GetMapping(value = ["/users/email/{email}"])
+    fun getUserByEmail(@PathVariable("email") email: String): User {
+        val user = userService.getUserByEmail(email)
+        if (user.isPresent)
+            return user.get()
+        else
+            throw UserNotFoundException("User with email $email was not found")
+    }
+
     @PutMapping(value = ["/users/{id}/report"])
     fun reportUser(@PathVariable("id") id: Long) {
         val user = userService.getUserById(id)

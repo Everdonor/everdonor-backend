@@ -31,7 +31,7 @@ internal class DBPreloader {
         //Users to Preload
         userRestController!!.signUp(User(1, "Comedor Nuevo", "comedor_nuevo@gmail.com",
                 "totallyNewNotTheifablePassword", 1131110288, "Address 123",
-                -58.288F, -34.65F, "https://elsolnoticias.com.ar/wp-content/uploads/2018/04/COme110418.jpg",
+                -58.31F, -34.7245F, "https://elsolnoticias.com.ar/wp-content/uploads/2018/04/COme110418.jpg",
                 listOf(DonationType.FOOD), "https://forms.todopago.com.ar:443/formulario/commands?command=formulario&fr=1&m=0cfa2dd44a53cfbd565a284b32236771#utm_source=3910474&utm_medium=boton_de_pago&utm_campaign=web"))
         userRestController.signUp(User(2, "Centro de donaciones Donarte", "donarte@gmail.com",
                 "pass123", 1131112345, "Address 123",
