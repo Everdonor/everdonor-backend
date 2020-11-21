@@ -77,7 +77,7 @@ class UserRestController(
 
     //TODO: Add exceptions again
     @GetMapping(value = ["/users"])
-    fun getUsersByTypesNameAndOrRadius(@RequestParam(required = false, defaultValue = "CLOTHES, FOOD, FUNDING") types: List<DonationType>,
+    fun getUsersByTypesNameAndOrRadius(@RequestParam(required = false, defaultValue = "CLOTHES, FOOD, FUNDING, KIDS, TOYS") types: List<DonationType>,
                                        @RequestParam(required = false, defaultValue = "") name: String,
                                        @RequestParam(required = false, defaultValue = "0") latitude: Double,
                                        @RequestParam(required = false, defaultValue = "0") longitude: Double,
