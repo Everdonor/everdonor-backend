@@ -13,7 +13,7 @@ interface UserDAO : CrudRepository<User?, Int?> {
     fun findById(id: Long): Optional<User?>
     fun findByEmail(email: String): Optional<User?>
     @Query("SELECT" +
-            "  *, (" +
+            "  *, ROUND(" +
             "    6371 * acos (" +
             "      cos ( radians(:userLatitude) )" +
             "      * cos( radians( latitude ) )" +
@@ -23,7 +23,7 @@ interface UserDAO : CrudRepository<User?, Int?> {
             "    )" +
             "  ) AS distance" +
             " FROM user" +
-            " HAVING distance < :userDistance" +
+            " HAVING distance <= :userDistance" +
             " ORDER BY distance",nativeQuery = true)
     fun findByRadius(@Param("userLatitude")latitude:Double,
                      @Param("userLongitude")longitude:Double,
