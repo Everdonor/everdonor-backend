@@ -59,7 +59,21 @@ internal class DBPreloader {
                 "pass123", 1131110293, "Address 123",
                 -55.298F, -31.75F,
                 "https://lh3.googleusercontent.com/proxy/LeWdvf6LdjYBabt-26pYxYOGVkO2xoYPrFwlEeg78d2FHm88OI_Zfho6b1-qYvcjp8tGQJ9ihsk2hxvuPkb_44CzgCWzbD1VlNGxSO_Or5tF1FRA-Wl9X879JXPNz_cbAEdoD2RQ64Uuh5Aphg",
-                listOf(DonationType.KIDS))
+                listOf(DonationType.PRIMARY))
         )
+        userRestController!!.signUp(User(7, "Comedor de Tarija", "comedor_tarija@gmail.com",
+                "pass123", 1132823363, "Tarija 258",
+                -58.2348457F, -34.8422006F, "https://imgur.com/JKZ8wni",
+                listOf(DonationType.FOOD), ""))
+        userRestController.signUp(User(8, "Los Chavitos", "los_chavitos@gmail.com",
+                "pass123", 1131112345, "Brochero 360",
+                -58.2325084F, -34.8408748F,
+                "https://imgur.com/apm1yON",
+                listOf(DonationType.FUNDING)))
+        userRestController.signUp(User(9, "Rayito de luz", "rayito@gmail.com",
+                "pass123", 1131112345, "Pergamino 585",
+                -58.2330696F, -34.8377128F,
+                "https://imgur.com/5fRyl9Y",
+                listOf(DonationType.PRIMARY)))
     }
 }
